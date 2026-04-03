@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fujifilm Instax Mini Link 2 — Print Your World</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050505;--bg2:#0c0c0c;--bg3:#141414;--bg4:#1a1a1a;
+  --text:#ffffff;--text2:#a0a0a0;--text3:#666;
+  --accent:#E24B4A;--accent2:#FF6B6A;--accent-glow:rgba(226,75,74,0.3);
+  --blue:#378ADD;--pink:#ED93B1;--gold:#FAC775;
+  --radius:16px;--radius-sm:10px;
+  --font:'Outfit',sans-serif;--mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat:repeat;opacity:0.4}
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 3rem;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(5,5,5,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);transition:all .3s}
+.nav-logo{font-weight:700;font-size:1.1rem;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;align-items:center}
+.nav-links a{font-size:.85rem;color:var(--text2);transition:color .3s;letter-spacing:0.5px;font-weight:400}
+.nav-links a:hover{color:var(--text)}
+.nav-cart{position:relative;cursor:pointer;background:var(--bg3);border:1px solid rgba(255,255,255,0.08);padding:8px 16px;border-radius:50px;font-size:.85rem;display:flex;align-items:center;gap:8px;transition:all .3s}
+.nav-cart:hover{border-color:var(--accent);background:rgba(226,75,74,0.08)}
+.cart-count{background:var(--accent);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:800px;
+  background:radial-gradient(circle,rgba(226,75,74,0.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;
+  background:linear-gradient(to top,var(--bg),transparent);pointer-events:none;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:50px;border:1px solid rgba(226,75,74,0.3);
+  background:rgba(226,75,74,0.06);color:var(--accent2);font-size:.78rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:2rem;
+  animation:fadeDown .8s ease}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-3px;margin-bottom:1.5rem;animation:fadeDown 1s ease .1s both}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent2),var(--pink),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--text2);max-width:550px;line-height:1.7;font-weight:300;margin-bottom:3rem;animation:fadeDown 1s ease .2s both}
+.hero-ctas{display:flex;gap:1rem;animation:fadeDown 1s ease .3s both}
+.btn-primary{padding:16px 36px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;
+  font-family:var(--font);transition:all .3s;position:relative;overflow:hidden}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--accent-glow)}
+.btn-secondary{padding:16px 36px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.15);border-radius:50px;
+  font-size:.95rem;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .3s}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.03)}
+.hero-image{margin-top:3rem;position:relative;z-index:1;animation:fadeUp 1.2s ease .4s both}
+.hero-image img{width:min(560px,85vw);height:auto;filter:drop-shadow(0 40px 80px rgba(226,75,74,0.15))}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.stats-bar{display:flex;justify-content:center;gap:3rem;padding:2rem 0;margin:-2rem 0 0;position:relative;z-index:3}
+.stat{text-align:center}
+.stat-num{font-size:2rem;font-weight:700;letter-spacing:-1px}
+.stat-num .accent{color:var(--accent)}
+.stat-label{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+.section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
+.section-label{font-family:var(--mono);font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:1rem}
+.section-title{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:1rem}
+.section-desc{font-size:1.05rem;color:var(--text2);line-height:1.7;max-width:500px;font-weight:300}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.feature-card{background:var(--bg2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:2.5rem 2rem;
+  transition:all .4s;position:relative;overflow:hidden}
+.feature-card:hover{border-color:rgba(226,75,74,0.2);transform:translateY(-4px)}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .4s}
+.feature-card:hover::before{opacity:1}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.4rem;
+  background:rgba(226,75,74,0.08);border:1px solid rgba(226,75,74,0.15)}
+.feature-card h3{font-size:1.15rem;font-weight:600;margin-bottom:.75rem;letter-spacing:-0.3px}
+.feature-card p{font-size:.88rem;color:var(--text2);line-height:1.7;font-weight:300}
+.colors-section{background:var(--bg2);border-radius:var(--radius);padding:4rem;margin-top:6rem;border:1px solid rgba(255,255,255,0.04)}
+.colors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.color-card{text-align:center;cursor:pointer;transition:all .3s}
+.color-card:hover{transform:scale(1.03)}
+.color-swatch{width:100%;aspect-ratio:1;border-radius:var(--radius);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,0.06);overflow:hidden;position:relative;background:#1a1a1a}
+.color-swatch img{width:80%;height:80%;object-fit:contain;transition:transform .5s}
+.color-card:hover .color-swatch img{transform:scale(1.08) rotate(-3deg)}
+.color-name{font-weight:600;font-size:1rem;margin-bottom:4px}
+.color-tag{font-size:.75rem;color:var(--text3);letter-spacing:1px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem}
+.step{position:relative;padding:2rem 1.5rem;text-align:center}
+.step-num{font-family:var(--mono);font-size:3rem;font-weight:700;color:rgba(226,75,74,0.15);margin-bottom:1rem}
+.step h3{font-size:1rem;font-weight:600;margin-bottom:.5rem}
+.step p{font-size:.83rem;color:var(--text2);line-height:1.6;font-weight:300}
+.step-line{position:absolute;top:3.5rem;right:-1rem;width:2rem;height:1px;background:rgba(255,255,255,0.1)}
+.step:last-child .step-line{display:none}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.testimonial{background:var(--bg2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);padding:2rem}
+.testimonial-stars{color:var(--gold);font-size:.9rem;margin-bottom:1rem;letter-spacing:2px}
+.testimonial p{font-size:.9rem;color:var(--text2);line-height:1.7;font-style:italic;font-weight:300;margin-bottom:1.5rem}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.testimonial-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600}
+.testimonial-name{font-size:.85rem;font-weight:500}
+.testimonial-verified{font-size:.7rem;color:var(--text3)}
+.specs-banner{background:var(--bg3);border:1px solid rgba(255,255,255,0.04);border-radius:var(--radius);padding:3rem;margin-top:6rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.spec-item{text-align:center;padding:1rem}
+.spec-item:not(:last-child){border-right:1px solid rgba(255,255,255,0.06)}
+.spec-value{font-size:1.5rem;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+.spec-key{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px}
+.cta-section{text-align:center;padding:8rem 2rem;position:relative}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;
+  background:radial-gradient(circle,rgba(226,75,74,0.06) 0%,transparent 70%);pointer-events:none}
+.cta-section h2{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;letter-spacing:-2px;margin-bottom:1.5rem}
+.cta-section p{font-size:1.1rem;color:var(--text2);margin-bottom:2.5rem;font-weight:300}
+.cta-price{font-size:3.5rem;font-weight:800;letter-spacing:-2px;margin-bottom:2rem}
+.cta-price sup{font-size:1.5rem;vertical-align:super;font-weight:600}
+.footer{border-top:1px solid rgba(255,255,255,0.05);padding:3rem;text-align:center;color:var(--text3);font-size:.8rem}
+.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem}
+.footer-links a{color:var(--text3);transition:color .3s;font-size:.8rem}
+.footer-links a:hover{color:var(--text)}
+.page{display:none}
+.page.active{display:block}
+.product-page{padding:7rem 2rem 4rem;max-width:1200px;margin:0 auto}
+.product-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}
+.product-gallery{position:relative}
+.product-main-img{width:100%;aspect-ratio:1;background:var(--bg2);border-radius:var(--radius);border:1px solid rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.product-main-img img{width:80%;height:80%;object-fit:contain;transition:transform .5s}
+.product-main-img:hover img{transform:scale(1.05)}
+.product-thumbs{display:flex;gap:.8rem;margin-top:1rem}
+.product-thumb{width:80px;height:80px;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;overflow:hidden}
+.product-thumb:hover,.product-thumb.active{border-color:var(--accent)}
+.product-thumb img{width:70%;height:70%;object-fit:contain}
+.product-badge-row{display:flex;gap:8px;margin-bottom:1rem}
+.product-badge{padding:5px 14px;border-radius:50px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.badge-new{background:rgba(226,75,74,0.12);color:var(--accent2);border:1px solid rgba(226,75,74,0.2)}
+.badge-best{background:rgba(250,199,117,0.1);color:var(--gold);border:1px solid rgba(250,199,117,0.2)}
+.product-info h1{font-size:2.2rem;font-weight:700;letter-spacing:-1px;margin-bottom:.5rem}
+.product-rating{display:flex;align-items:center;gap:8px;margin-bottom:1.5rem}
+.product-rating .stars{color:var(--gold);font-size:.85rem}
+.product-rating .count{font-size:.85rem;color:var(--text3)}
+.product-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:2rem}
+.product-price{font-size:2.5rem;font-weight:800;letter-spacing:-1px}
+.product-original{font-size:1.1rem;color:var(--text3);text-decoration:line-through}
+.product-save{background:rgba(226,75,74,0.1);color:var(--accent2);padding:4px 12px;border-radius:50px;font-size:.75rem;font-weight:600}
+.product-desc{font-size:.95rem;color:var(--text2);line-height:1.8;margin-bottom:2rem;font-weight:300;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:2rem}
+.color-selector{margin-bottom:2rem}
+.color-selector label{font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:.8rem}
+.color-options{display:flex;gap:12px}
+.color-opt{width:44px;height:44px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .3s;position:relative}
+.color-opt:hover,.color-opt.active{border-color:var(--accent)}
+.color-opt.active::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700}
+.qty-row{display:flex;align-items:center;gap:2rem;margin-bottom:2rem}
+.qty-label{font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px}
+.qty-control{display:flex;align-items:center;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);overflow:hidden}
+.qty-btn{width:44px;height:44px;background:var(--bg3);border:none;color:var(--text);font-size:1.2rem;cursor:pointer;font-family:var(--font);transition:background .2s}
+.qty-btn:hover{background:var(--bg4)}
+.qty-val{width:50px;text-align:center;font-weight:600;font-size:1rem;background:transparent;border:none;color:var(--text);font-family:var(--font)}
+.add-to-cart{width:100%;padding:18px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-size:1.05rem;font-weight:600;
+  cursor:pointer;font-family:var(--font);transition:all .3s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1rem}
+.add-to-cart:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--accent-glow)}
+.add-to-cart.added{background:#1d9e75}
+.buy-now{width:100%;padding:16px;background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.15);border-radius:50px;
+  font-size:.95rem;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .3s}
+.buy-now:hover{border-color:var(--text)}
+.trust-row{display:flex;gap:1.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.05)}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text3)}
+.trust-icon{font-size:1rem}
+.product-specs{margin-top:4rem;background:var(--bg2);border-radius:var(--radius);border:1px solid rgba(255,255,255,0.05);overflow:hidden}
+.specs-header{padding:1.5rem 2rem;border-bottom:1px solid rgba(255,255,255,0.05);font-weight:600;font-size:1.1rem}
+.specs-table{width:100%}
+.specs-table tr{border-bottom:1px solid rgba(255,255,255,0.03)}
+.specs-table tr:last-child{border-bottom:none}
+.specs-table td{padding:1rem 2rem;font-size:.9rem}
+.specs-table td:first-child{color:var(--text3);width:40%;font-weight:400}
+.specs-table td:last-child{font-weight:500}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-sidebar{position:fixed;top:0;right:-420px;width:400px;max-width:90vw;height:100vh;background:var(--bg);border-left:1px solid rgba(255,255,255,0.06);
+  z-index:2001;transition:right .4s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column}
+.cart-sidebar.open{right:0}
+.cart-header{padding:1.5rem 2rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center}
+.cart-header h3{font-size:1.1rem;font-weight:600}
+.cart-close{background:none;border:none;color:var(--text2);font-size:1.5rem;cursor:pointer;padding:4px;line-height:1}
+.cart-items{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.cart-empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
+.cart-empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.3}
+.cart-item{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.cart-item-img{width:70px;height:70px;background:var(--bg3);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-img img{width:50px;height:50px;object-fit:contain}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:.9rem;font-weight:500;margin-bottom:4px}
+.cart-item-color{font-size:.75rem;color:var(--text3);margin-bottom:8px}
+.cart-item-bottom{display:flex;justify-content:space-between;align-items:center}
+.cart-item-price{font-weight:600;font-size:.95rem}
+.cart-item-remove{background:none;border:none;color:var(--text3);font-size:.75rem;cursor:pointer;text-decoration:underline;font-family:var(--font)}
+.cart-item-remove:hover{color:var(--accent)}
+.cart-footer{padding:1.5rem 2rem;border-top:1px solid rgba(255,255,255,0.06)}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.cart-total span:first-child{color:var(--text2);font-size:.9rem}
+.cart-total span:last-child{font-size:1.3rem;font-weight:700}
+.cart-checkout{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:600;
+  cursor:pointer;font-family:var(--font);transition:all .3s}
+.cart-checkout:hover{box-shadow:0 8px 40px var(--accent-glow)}
+@media(max-width:900px){
+  .nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .features{grid-template-columns:1fr}
+  .colors-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .step-line{display:none}
+  .testimonials{grid-template-columns:1fr}
+  .specs-banner{grid-template-columns:repeat(2,1fr)}
+  .product-grid{grid-template-columns:1fr}
+  .stats-bar{flex-wrap:wrap;gap:1.5rem}
+}
+@media(max-width:600px){
+  .hero h1{font-size:2.5rem;letter-spacing:-1.5px}
+  .hero-ctas{flex-direction:column;width:100%;max-width:300px}
+  .btn-primary,.btn-secondary{width:100%;text-align:center}
+  .specs-banner{grid-template-columns:1fr}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.25,.8,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo"><span>INSTAX</span> Mini Link 2</div>
+  <div class="nav-links">
+    <a href="#features" onclick="showPage('landing')">Features</a>
+    <a href="#colors" onclick="showPage('landing')">Colors</a>
+    <a href="#how" onclick="showPage('landing')">How It Works</a>
+    <a href="#" onclick="showPage('product');return false;">Shop</a>
+  </div>
+  <div class="nav-cart" onclick="toggleCart()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span>Cart</span>
+    <div class="cart-count" id="cartCount">0</div>
+  </div>
+</nav>
+
+<!-- LANDING PAGE -->
+<div class="page active" id="landingPage">
+  <section class="hero">
+    <div class="hero-badge"><span></span> Now Available — Free Shipping</div>
+    <h1>Print moments<br><span class="gradient">not just photos.</span></h1>
+    <p class="hero-sub">The Fujifilm Instax Mini Link 2 turns your smartphone into an instant photo studio. Print, create, and share — anywhere, anytime.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="showPage('product')">Shop Now — $99.95</button>
+      <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Explore Features</button>
+    </div>
+    <div class="hero-image">
+      <img src="Pink/PinkBack/5p.png" alt="Instax Mini Link 2 — print your moments">
+    </div>
+  </section>
+
+  <div class="stats-bar reveal">
+    <div class="stat"><div class="stat-num">12<span class="accent">s</span></div><div class="stat-label">Print Time</div></div>
+    <div class="stat"><div class="stat-num">100<span class="accent">+</span></div><div class="stat-label">Prints Per Charge</div></div>
+    <div class="stat"><div class="stat-num">4.6<span class="accent">★</span></div><div class="stat-label">Customer Rating</div></div>
+    <div class="stat"><div class="stat-num">318<span class="accent">dpi</span></div><div class="stat-label">Resolution</div></div>
+  </div>
+
+  <section class="section" id="features">
+    <div class="reveal">
+      <div class="section-label">Features</div>
+      <div class="section-title">Creativity, unleashed.</div>
+      <div class="section-desc">Every feature designed to help you create prints that feel as special as the moments they capture.</div>
+    </div>
+    <div class="features">
+      <div class="feature-card reveal"><div class="feature-icon">✨</div><h3>instaxAiR™ Drawing</h3><p>Wave the printer in the air to draw doodles, shapes, and effects directly onto your photos before printing. Magic in motion.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📱</div><h3>Wireless Bluetooth</h3><p>Seamless connection to your iPhone or Android. Pair once, print forever. No cables, no hassle — just pure simplicity.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🎬</div><h3>Video Print</h3><p>Scroll through your favorite videos, find the perfect frame, and print it as an instant photo. Freeze your best moments.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🎨</div><h3>Rich & Natural Modes</h3><p>Switch between vivid, punchy colors or soft, film-like tones. Two color modes to match every aesthetic and mood.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">💕</div><h3>Match Test</h3><p>Test your compatibility with friends! Answer questions together and print your friendship score — up to 100 — on your photo.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">⚡</div><h3>100 Prints Per Charge</h3><p>Built-in rechargeable battery powers up to 100 prints on a single charge. Enough for any party, trip, or late-night session.</p></div>
+    </div>
+  </section>
+
+  <div class="section" id="colors">
+    <div class="colors-section reveal">
+      <div class="section-label">Available Colors</div>
+      <div class="section-title">Pick your vibe.</div>
+      <div class="section-desc">Three carefully crafted colorways to match your personality.</div>
+      <div class="colors-grid">
+        <div class="color-card" onclick="showPage('product');selectColor('white')">
+          <div class="color-swatch"><img src="White/WhiteBackFree/1w.png" alt="White"></div>
+          <div class="color-name">White</div>
+          <div class="color-tag">White edition</div>
+        </div>
+        <div class="color-card" onclick="showPage('product');selectColor('pink')">
+          <div class="color-swatch"><img src="Pink/PinkBack/1p.png" alt="Pink"></div>
+          <div class="color-name">Pink</div>
+          <div class="color-tag">Pink edition</div>
+        </div>
+        <div class="color-card" onclick="showPage('product');selectColor('blue')">
+          <div class="color-swatch"><img src="Blue/Backfree/1b.png" alt="Blue"></div>
+          <div class="color-name">Blue</div>
+          <div class="color-tag">Blue edition</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="how">
+    <div class="reveal">
+      <div class="section-label">How It Works</div>
+      <div class="section-title">From phone to print<br>in four steps.</div>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">01</div><h3>Download the App</h3><p>Get the free INSTAX Mini Link app for iOS or Android.</p><div class="step-line"></div></div>
+      <div class="step reveal"><div class="step-num">02</div><h3>Connect via Bluetooth</h3><p>Pair your phone to the printer in seconds — one tap setup.</p><div class="step-line"></div></div>
+      <div class="step reveal"><div class="step-num">03</div><h3>Edit & Customize</h3><p>Add filters, frames, text, and instaxAiR™ effects to your image.</p><div class="step-line"></div></div>
+      <div class="step reveal"><div class="step-num">04</div><h3>Swipe Up & Print</h3><p>Swipe up in the app and watch your print appear in ~12 seconds.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="reveal">
+      <div class="section-label">Reviews</div>
+      <div class="section-title">People love it.</div>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Brought this to a party and it was the hit of the night. Everyone wanted to print their photos. The air drawing feature is seriously fun!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:rgba(226,75,74,0.15);color:var(--accent2)">SJ</div>
+          <div><div class="testimonial-name">Sarah J.</div><div class="testimonial-verified">Verified Purchase</div></div>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Print quality is incredible for an instant printer. The colors are vibrant and it connects to my iPhone instantly. Best $99 I've spent."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:rgba(55,138,221,0.15);color:var(--blue)">MK</div>
+          <div><div class="testimonial-name">Mike K.</div><div class="testimonial-verified">Verified Purchase</div></div>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">★★★★☆</div>
+        <p>"Got the Pink for my daughter's birthday. She uses it every day to print TikTok screenshots and decorate her room. She's obsessed."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:rgba(237,147,177,0.15);color:var(--pink)">LR</div>
+          <div><div class="testimonial-name">Lisa R.</div><div class="testimonial-verified">Verified Purchase</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section">
+    <div class="specs-banner reveal">
+      <div class="spec-item"><div class="spec-value">2×3"</div><div class="spec-key">Print Size</div></div>
+      <div class="spec-item"><div class="spec-value">Bluetooth</div><div class="spec-key">Connectivity</div></div>
+      <div class="spec-item"><div class="spec-value">5.0 oz</div><div class="spec-key">Weight</div></div>
+      <div class="spec-item"><div class="spec-value">USB</div><div class="spec-key">Charging</div></div>
+    </div>
+  </div>
+
+  <section class="cta-section">
+    <div class="reveal">
+      <h2>Ready to start printing?</h2>
+      <p>Join thousands who've turned their phone gallery into real, tangible memories.</p>
+      <div class="cta-price">$99<sup>.95</sup></div>
+      <button class="btn-primary" onclick="showPage('product')" style="font-size:1.1rem;padding:18px 48px">Shop Now &rarr;</button>
+    </div>
+  </section>
+</div>
+
+<!-- PRODUCT PAGE -->
+<div class="page" id="productPage">
+  <div class="product-page">
+    <div style="margin-bottom:1.5rem">
+      <a href="#" onclick="showPage('landing');return false;" style="font-size:.85rem;color:var(--text3);display:flex;align-items:center;gap:6px;transition:color .3s"
+        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text3)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to home
+      </a>
+    </div>
+    <div class="product-grid">
+      <div class="product-gallery">
+        <div class="product-main-img" id="mainImage">
+          <img id="mainImg" src="White/WhiteBackFree/1w.png" alt="Instax Mini Link 2">
+        </div>
+        <div class="product-thumbs" id="productThumbs"></div>
+      </div>
+      <div class="product-info">
+        <div class="product-badge-row">
+          <span class="product-badge badge-new">New</span>
+          <span class="product-badge badge-best">Bestseller</span>
+        </div>
+        <h1>Fujifilm Instax Mini Link 2</h1>
+        <div style="font-size:.9rem;color:var(--text3);margin-bottom:.8rem">Smartphone Instant Photo Printer</div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="count">4.6 (2,847 reviews)</span>
+        </div>
+        <div class="product-price-row">
+          <span class="product-price">$99.95</span>
+          <span class="product-original">$129.95</span>
+          <span class="product-save">Save $30</span>
+        </div>
+        <p class="product-desc">The INSTAX Mini Link 2 is a wireless smartphone printer that brings your digital memories to life on credit-card-sized instant film. Featuring the innovative instaxAiR™ technology, Bluetooth connectivity, and a companion app packed with creative tools — it's the perfect blend of tech and nostalgia.</p>
+
+        <div class="color-selector">
+          <label>Color — <span id="colorName">White</span></label>
+          <div class="color-options">
+            <div class="color-opt active" style="background:#e8ddd0" data-color="white" data-name="White" onclick="selectColor('white')"></div>
+            <div class="color-opt" style="background:#e8b4c0" data-color="pink" data-name="Pink" onclick="selectColor('pink')"></div>
+            <div class="color-opt" style="background:#3a4a6b" data-color="blue" data-name="Blue" onclick="selectColor('blue')"></div>
+          </div>
+        </div>
+
+        <div class="qty-row">
+          <span class="qty-label">Quantity</span>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input type="text" class="qty-val" id="qtyVal" value="1" readonly>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <button class="add-to-cart" id="addToCartBtn" onclick="addToCart()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Add to Cart
+        </button>
+        <button class="buy-now">Buy Now — Express Checkout</button>
+
+        <div class="trust-row">
+          <div class="trust-item"><span class="trust-icon">🚚</span> Free Shipping</div>
+          <div class="trust-item"><span class="trust-icon">🔒</span> Secure Payment</div>
+          <div class="trust-item"><span class="trust-icon">↩️</span> 30-Day Returns</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-specs reveal">
+      <div class="specs-header">Technical Specifications</div>
+      <table class="specs-table">
+        <tr><td>Print Size</td><td>2.13" × 3.39" (Instax Mini Format)</td></tr>
+        <tr><td>Image Area</td><td>1.81" × 2.44" (46mm × 62mm)</td></tr>
+        <tr><td>Resolution</td><td>318 dpi (12.5 dots/mm)</td></tr>
+        <tr><td>Print Time</td><td>~12 seconds</td></tr>
+        <tr><td>Connectivity</td><td>Bluetooth 4.2 (BLE)</td></tr>
+        <tr><td>Compatibility</td><td>iOS 14+ / Android 9+</td></tr>
+        <tr><td>Battery</td><td>Rechargeable Li-ion (up to 100 prints)</td></tr>
+        <tr><td>Charging</td><td>Micro USB</td></tr>
+        <tr><td>Weight</td><td>Approx. 210g (without film)</td></tr>
+        <tr><td>Dimensions</td><td>3.5" × 5.3" × 1.4"</td></tr>
+        <tr><td>Film Type</td><td>Fujifilm Instax Mini Instant Film</td></tr>
+        <tr><td>In the Box</td><td>Printer, USB Cable, 1-Year Warranty</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart (<span id="cartItemCount">0</span>)</h3>
+    <button class="cart-close" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Your cart is empty</p></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Subtotal</span><span id="cartTotal">$0.00</span></div>
+    <button class="cart-checkout">Proceed to Checkout</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Shipping Info</a>
+    <a href="#">Contact</a>
+  </div>
+  <p>&copy; 2026 Instax Mini Link 2 Store. Not affiliated with Fujifilm. Demo landing page.</p>
+</footer>
+
+<script>
+// All product images per color
+const colorData = {
+  white: {
+    name: 'White',
+    cart: 'White/WhiteBackFree/1w.png',
+    images: [
+      'White/WhiteBackFree/1w.png',
+      'White/WhiteBackFree/2w.png',
+      'White/WhiteBackFree/3w.png',
+      'White/WhiteBackFree/4w.png'
+    ]
+  },
+  pink: {
+    name: 'Pink',
+    cart: 'Pink/PinkBack/1p.png',
+    images: [
+      'Pink/PinkBack/1p.png',
+      'Pink/PinkBack/5p.png',
+      'Pink/PinkBack/3p.png',
+      'Pink/PinkBack/4p.png',
+      'Pink/PinkBack/5p.png'
+    ]
+  },
+  blue: {
+    name: 'Blue',
+    cart: 'Blue/Backfree/1b.png',
+    images: [
+      'Blue/Backfree/1b.png',
+      'Blue/Backfree/2b.png',
+      'Blue/Backfree/3b.png',
+      'Blue/Backfree/4b.png'
+    ]
+  }
+};
+
+let cart = [];
+
+let currentQty = 1;
+let currentColor = 'white';
+
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page==='landing'?'landingPage':'productPage').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initReveal,100);
+}
+
+function renderThumbnails(color){
+  const thumbsWrap=document.getElementById('productThumbs');
+  if(!thumbsWrap) return;
+  thumbsWrap.innerHTML=colorData[color].images.map((src,i)=>`
+    <div class="product-thumb ${i===0?'active':''}" onclick="changeImage(this, '${color}', ${i})">
+      <img src="${src}" alt="${colorData[color].name} view ${i+1}">
+    </div>
+  `).join('');
+}
+
+function selectColor(color){
+  currentColor=color;
+  document.querySelectorAll('.color-opt').forEach(c=>c.classList.remove('active'));
+  document.querySelector(`.color-opt[data-color="${color}"]`)?.classList.add('active');
+  const nameEl=document.getElementById('colorName');
+  if(nameEl) nameEl.textContent=colorData[color].name;
+
+  const mainImg=document.getElementById('mainImg');
+  if(mainImg) mainImg.src=colorData[color].images[0];
+
+  renderThumbnails(color);
+}
+
+function changeQty(d){
+
+  currentQty=Math.max(1,Math.min(10,currentQty+d));
+  document.getElementById('qtyVal').value=currentQty;
+}
+
+function changeImage(thumb, color, idx){
+  document.querySelectorAll('.product-thumb').forEach(t=>t.classList.remove('active'));
+  thumb.classList.add('active');
+  const mainImg=document.getElementById('mainImg');
+  if(mainImg) mainImg.src=colorData[color||currentColor].images[idx];
+}
+
+function addToCart(){
+
+  const cd=colorData[currentColor];
+  const existing=cart.find(c=>c.color===currentColor);
+  if(existing){existing.qty+=currentQty}
+  else{cart.push({id:Date.now(),color:currentColor,name:cd.name,qty:currentQty,price:99.95,image:cd.cart})}
+  updateCart();
+  const btn=document.getElementById('addToCartBtn');
+  btn.classList.add('added');
+  btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Added!';
+  setTimeout(()=>{btn.classList.remove('added');btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Add to Cart'},1500);
+  toggleCart();
+}
+
+function removeFromCart(id){
+  cart=cart.filter(c=>c.id!==id);
+  updateCart();
+}
+
+function updateCart(){
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const count=cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartItemCount').textContent=count;
+  document.getElementById('cartTotal').textContent='$'+total.toFixed(2);
+  const itemsEl=document.getElementById('cartItems');
+  const footer=document.getElementById('cartFooter');
+  if(cart.length===0){
+    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Your cart is empty</p></div>';
+    footer.style.display='none';
+  } else {
+    footer.style.display='block';
+    itemsEl.innerHTML=cart.map(c=>`
+      <div class="cart-item">
+        <div class="cart-item-img"><img src="${c.image}" alt="${c.name}"></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">Instax Mini Link 2</div>
+          <div class="cart-item-color">${c.name} × ${c.qty}</div>
+          <div class="cart-item-bottom">
+            <div class="cart-item-price">$${(c.price*c.qty).toFixed(2)}</div>
+            <button class="cart-item-remove" onclick="removeFromCart(${c.id})">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function toggleCart(){
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartSidebar').classList.toggle('open');
+}
+
+function initReveal(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+document.addEventListener('DOMContentLoaded',()=>{initReveal();selectColor(currentColor);});
+</script>
+</body>
+</html>
